@@ -4,38 +4,37 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 10;
+    public float moveSpeed = 5;
+
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        Vector3 movement = Vector3.right * x;
-
-        float y = Input.GetAxisRaw("Vertical");
-        movement += Vector3.forward * y;
-
-        movement = movement.normalized;
-
-        movement *= Time.deltaTime;
-
-        movement *= moveSpeed;
-
-        transform.position += movement;
-        
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+        Vector3 targetDirection = new Vector3(x, 0, y);
+        Vector3 targetPosition = transform.position + targetDirection;
+        if (targetDirection.magnitude > Mathf.Epsilon)
+        {
+            transform.LookAt(targetPosition);
+            transform.position += transform.forward * Time.deltaTime * moveSpeed;
+        }
     }
+
     public void Hit(GameObject other)
     {
         Debug.Log("Gracz trafiony");
     }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Gracz trafiony");
+            GameObject.Find("LevelManager").GetComponent<LevelManager>().GameOver();
         }
     }
 }

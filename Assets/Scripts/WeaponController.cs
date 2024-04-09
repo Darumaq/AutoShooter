@@ -14,7 +14,6 @@ public class WeaponController : MonoBehaviour
     Transform projectileSpawn;
 
     public float rateOfFire = 1;
-
     float timeSinceLastFire = 0;
 
     public float projectileForce = 20;
@@ -37,16 +36,12 @@ public class WeaponController : MonoBehaviour
             {
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawn.position, Quaternion.identity);
 
-                
-            
-                Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
 
+                Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
                 projectileRB.AddForce(projectileSpawn.transform.forward * projectileForce, ForceMode.VelocityChange);
 
-               
                 timeSinceLastFire = 0;
 
-              
                 Destroy(projectile, 5);
             }
             else
@@ -58,21 +53,17 @@ public class WeaponController : MonoBehaviour
     }
     Transform TagTargeter(string tag)
     {
-       
         GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
 
-       
         Transform closestTarget = transform;
         float closestDistance = Mathf.Infinity;
 
         foreach (GameObject target in targets)
         {
-           
             Vector3 difference = target.transform.position - player.position;
-           
             float distance = difference.magnitude;
 
-            if (distance < closestDistance && distance < range) 
+            if (distance < closestDistance && distance < range)
             {
                 closestTarget = target.transform;
                 closestDistance = distance;
@@ -97,14 +88,19 @@ public class WeaponController : MonoBehaviour
 
             if (model.transform.parent != null)
             {
+         
                 GameObject enemy = model.transform.parent.gameObject;
 
+           
                 if (enemy.CompareTag("Enemy"))
                 {
+                
                     Vector3 diference = player.position - enemy.transform.position;
+         
                     float distance = diference.magnitude;
                     if (distance < targetDistance)
                     {
+           
                         target = enemy.transform;
                         targetDistance = distance;
                     }
@@ -114,7 +110,7 @@ public class WeaponController : MonoBehaviour
 
         }
 
-     
+
 
         return target;
     }
