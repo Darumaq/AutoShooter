@@ -26,6 +26,23 @@ public class LevelManager : MonoBehaviour
     {
         timeSinceSpawn += Time.deltaTime;
 
+        // Sprawdzenie, czy czas jest mniejszy lub równy zero
+        if (levelTime <= 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            // Odjêcie czasu
+            levelTime -= Time.deltaTime;
+            // Ustawienie czasu na zero, jeœli jego wartoœæ spadnie poni¿ej zera
+            if (levelTime < 0)
+            {
+                levelTime = 0;
+            }
+            UpdateUI();
+        }
+
         if (timeSinceSpawn > spawnInterval)
         {
             Vector2 random = Random.insideUnitCircle.normalized;
@@ -39,17 +56,6 @@ public class LevelManager : MonoBehaviour
                 timeSinceSpawn = 0;
             }
         }
-
-        if (levelTime < 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            levelTime -= Time.deltaTime;
-            UpdateUI();
-        }
-
     }
 
     public void AddPoints(int amount)
