@@ -21,6 +21,7 @@ public class BasherController : MonoBehaviour
         transform.position += transform.forward * Time.deltaTime * walkSpeed;
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         if (hasBeenHit) { return; }
@@ -35,4 +36,4 @@ public class BasherController : MonoBehaviour
             Destroy(transform.gameObject);
         }
     }
-}
+} 
